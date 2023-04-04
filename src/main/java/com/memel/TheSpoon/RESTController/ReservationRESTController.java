@@ -1,8 +1,6 @@
 package com.memel.TheSpoon.RESTController;
 
-import com.memel.TheSpoon.entities.Personne;
 import com.memel.TheSpoon.entities.Reservation;
-import com.memel.TheSpoon.services.PersonneService;
 import com.memel.TheSpoon.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

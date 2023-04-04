@@ -36,8 +36,4 @@ public class Restaurant {
     @Column(length = 50)
     private String horaires;
 
-    @ManyToOne
-    @JoinColumn(name = "personne_id")
-    private Personne personne;
-
 }

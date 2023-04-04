@@ -27,11 +27,7 @@ public class Reservation {
 
     @Column(length = 50)
     private String heureReservation;
-
-    @ManyToOne
-    @JoinColumn(name = "personne_id")
-    private Personne personne;
-
+    
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
