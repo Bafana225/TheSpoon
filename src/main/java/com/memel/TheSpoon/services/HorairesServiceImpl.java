@@ -38,8 +38,4 @@ public class HorairesServiceImpl implements HorairesService {
     public List<Horaires> getAllHoraires() {
         return horairesRepository.findAll();
     }
-
-    // Fonctions avancées
-
-
 }

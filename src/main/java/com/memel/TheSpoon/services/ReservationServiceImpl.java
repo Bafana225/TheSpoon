@@ -44,13 +44,13 @@ public class ReservationServiceImpl implements ReservationService {
 
 
     // fonctions ++
-    public List<Reservation> getReservationByIdRestaurant(Long idRestaurant){
+    public List<Reservation> getReservationByIdRestaurant(Long id){
         List<Restaurant> restaurants = restaurantRepository.findAll();
         List<Reservation> reservations = new ArrayList<Reservation>();
         Restaurant restaurant = new Restaurant();
 
         for(int i = 0; i < restaurants.size(); i++){
-            if(restaurants.get(i).getId() == idRestaurant){
+            if(restaurants.get(i).getId() == id){
                 restaurant = restaurants.get(i);
             }
         }
