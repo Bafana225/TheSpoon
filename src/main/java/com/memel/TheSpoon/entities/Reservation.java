@@ -20,12 +20,16 @@ public class Reservation {
     private long id;
 
     @Column(length = 50)
-    private Short nbAdultes;
+    private Integer nbAdultes;
 
     @Column(length = 50)
-    private Short nbEnfants;
+    private Integer nbEnfants;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
+
+   @ManyToOne
+   @JoinColumn(name = "horaires_id")
+   private Horaires horaires;
 }
