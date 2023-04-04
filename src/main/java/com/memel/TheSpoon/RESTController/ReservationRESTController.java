@@ -14,9 +14,6 @@ public class ReservationRESTController {
     @Autowired
     ReservationService reservationService;
 
-    @Autowired
-    private PersonneService personneService;
-
     @RequestMapping(method = RequestMethod.GET)
     public List<Reservation> getAllReservations()
     {
@@ -36,13 +33,6 @@ public class ReservationRESTController {
     @RequestMapping(method = RequestMethod.PUT)
     public Reservation updateReservation(@RequestBody Reservation reservation) {
         return reservationService.updateReservation(reservation);
-    }
-
-    @RequestMapping(value="/personne/{id}", method = RequestMethod.GET)
-    public Long getPersonneIdByReservationId(@PathVariable("id") Long id) {
-        Reservation reservation = reservationService.getReservation(id);
-        Personne personne = reservation.getPersonne();
-        return personne.getId();
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.DELETE)

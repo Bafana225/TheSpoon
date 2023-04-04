@@ -36,4 +36,3 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.findAll();
     }
 }
-

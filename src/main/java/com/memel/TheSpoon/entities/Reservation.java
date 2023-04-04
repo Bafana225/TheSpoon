@@ -26,8 +26,8 @@ public class Reservation {
     private Short nbEnfants;
 
     @Column(length = 50)
-    private String heureReservation;
-    
+    private Horaire horraire;
+
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;

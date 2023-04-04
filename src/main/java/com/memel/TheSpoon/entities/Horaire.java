@@ -1,4 +1,4 @@
 package com.memel.TheSpoon.entities;
 
-public class Horaires {
+public class Horaire {
 }

@@ -1,4 +1,4 @@
 package com.memel.TheSpoon.repository;
 
-public interface HorairesRepository {
+public interface HoraireRepository {
 }
