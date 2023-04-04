@@ -1,5 +1,6 @@
 package com.memel.TheSpoon.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +10,6 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "personne")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,7 +18,7 @@ public class Personne {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idPersonne", nullable = false)
+    @Column
     private long id;
 
     @Column(length = 50)
@@ -36,12 +36,12 @@ public class Personne {
     @Column(length = 50)
     private String codePostal;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "personneReserveation",
-            joinColumns = { @JoinColumn(name = "idPersonne") },
-            inverseJoinColumns = { @JoinColumn (name = "idReservation")}
-    )
+    @OneToMany(mappedBy = "restaurant")
+    @JsonIgnore
+    private List<Restaurant> restaurants;
+
+    @OneToMany(mappedBy = "personne")
+    @JsonIgnore
     private List<Reservation> reservations;
 
     @ManyToOne

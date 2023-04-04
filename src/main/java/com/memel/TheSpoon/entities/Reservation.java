@@ -1,16 +1,13 @@
 package com.memel.TheSpoon.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 
 @Entity
-@Table(name = "reservation")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,7 +16,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idReservation", nullable = false)
+    @Column
     private long id;
 
     @Column(length = 50)
@@ -36,6 +33,6 @@ public class Reservation {
     private Personne personne;
 
     @ManyToOne
-    @JoinColumn(name = "id_restaurant")
-    private Restaurant resataurant;
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 }

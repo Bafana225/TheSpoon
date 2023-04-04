@@ -10,7 +10,6 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "restaurant")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,7 +18,7 @@ public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idPersonne", nullable = false)
+    @Column
     private long id;
 
     @Column(length = 50)
@@ -40,8 +39,8 @@ public class Restaurant {
     @Column(length = 50)
     private String horaires;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "restaurants", cascade = CascadeType.ALL)
-    private List<Personne> personnes;
+    @ManyToOne
+    @JoinColumn(name = "proprietaire_id")
+    private Personne personne;
 
 }
