@@ -1,16 +1,22 @@
 package com.memel.TheSpoon.services;
 
+import com.memel.TheSpoon.entities.Horaires;
 import com.memel.TheSpoon.entities.Reservation;
+import com.memel.TheSpoon.entities.Restaurant;
 import com.memel.TheSpoon.repository.ReservationRepository;
+import com.memel.TheSpoon.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    RestaurantRepository restaurantRepository;
     @Override
     public Reservation saveReservation(Reservation r) {
         return reservationRepository.save(r);
@@ -34,5 +40,36 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
+    }
+
+
+    // fonctions ++
+    public List<Reservation> getReservationByIdRestaurant(Long idRestaurant){
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        List<Reservation> reservations = new ArrayList<Reservation>();
+        Restaurant restaurant = new Restaurant();
+
+        for(int i = 0; i < restaurants.size(); i++){
+            if(restaurants.get(i).getId() == idRestaurant){
+                restaurant = restaurants.get(i);
+            }
+        }
+
+        reservations = restaurant.getReservation();
+
+        return reservations;
+    }
+
+    //getReservationByHoraire
+    public List<Reservation> getReservationByHoraire(List<Reservation> reservations, Horaires horaire){
+        List<Reservation> reservationsFiltre = new ArrayList<>();
+
+        for(int i = 0; i < reservations.size(); i++){
+            if(reservations.get(i).getHoraires().equals(horaire)){
+                reservationsFiltre.add(reservations.get(i));
+            }
+        }
+
+        return reservationsFiltre;
     }
 }
