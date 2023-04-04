@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,15 +28,18 @@ public class Restaurant {
     private String adresse;
 
     @Column(length = 50)
-    private String nbCouverts;
+    private Short nbCouverts;
 
     @Column(length = 50)
-    private String accessibilitePmr;
+    private Boolean accessibilitePmr;
 
     @Column(length = 50)
     private Double prixMoyen;
 
-    @Column(length = 50)
-    private String horaires;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "restaurant_horaire",
+            joinColumns = @JoinColumn(name = "restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "horaire_id"))
+    private List<Horaire> horaires = new ArrayList<>();
 
 }
