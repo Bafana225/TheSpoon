@@ -2,6 +2,8 @@ package com.memel.TheSpoon.RESTController;
 
 import com.memel.TheSpoon.entities.Personne;
 import com.memel.TheSpoon.entities.Reservation;
+import com.memel.TheSpoon.services.PersonneServiceImpl;
+import com.memel.TheSpoon.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +51,7 @@ public class PersonneRESTController {
     }
 
     @RequestMapping(value="/add-command/{client_id}/{commande_id}", method=RequestMethod.PUT)
-    public ResponseEntity<List<Reservation>> addCommandeClient(@PathVariable Long client_id, @PathVariable Long commande_id) {
+    public ResponseEntity<List<Reservation>> addCommandeClient(@PathVariable Long personne_id, @PathVariable Long reservation_id) {
         Personne personne = personneServiceImpl.addReservation(personne_id, reservation_id);
         List<Reservation> reservations = personne.getReservations();
         return ResponseEntity.ok(reservations);

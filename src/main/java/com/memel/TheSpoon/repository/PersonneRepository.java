@@ -2,22 +2,16 @@ package com.memel.TheSpoon.repository;
 
 import com.memel.TheSpoon.entities.Personne;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
 
 import java.util.List;
 
-@Repository
+@RepositoryRestResource(path = "rest")
 public interface PersonneRepository extends JpaRepository<Personne, Long> {
-
     Personne findPersonneById(Long id);
+    void deletePersonById(Long id);
 
-    void deletePersonneById(Long id);
-
-    List<Personne> findByTypePersonneId(Long typePersonneId);
-
-    @Query("SELECT p FROM Personne p WHERE p.typePersonne.libelle = :nom")
-    List<Personne> findByTypePersonneNom(@Param("nom") String nom);
+    List<Personne> findByTypePersonId(Long typePersonId);
 
 }

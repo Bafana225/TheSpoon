@@ -3,7 +3,7 @@ package com.memel.TheSpoon.services;
 import com.memel.TheSpoon.entities.Personne;
 import java.util.List;
 
-public class PersonneService {
+public interface PersonneService {
 
     Personne savePersonne(Personne p);
     Personne updatePersonne(Personne p);

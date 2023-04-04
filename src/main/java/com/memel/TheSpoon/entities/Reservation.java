@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-
 public class Reservation {
 
     @Id
@@ -24,17 +23,17 @@ public class Reservation {
     private long id;
 
     @Column(length = 50)
-    private String nbAdultes;
+    private Short nbAdultes;
 
     @Column(length = 50)
-    private String nbEnfants;
+    private Short nbEnfants;
 
     @Column(length = 50)
     private String heureReservation;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "biensImmobiliers", cascade = CascadeType.ALL)
-    private List<Personne> personnes;
+    @ManyToOne
+    @JoinColumn(name = "personne_id")
+    private Personne personne;
 
     @ManyToOne
     @JoinColumn(name = "id_restaurant")
