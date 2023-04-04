@@ -1,5 +1,6 @@
 package com.memel.TheSpoon.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,5 +36,14 @@ public class Restaurant {
 
     @Column(length = 50)
     private Double prixMoyen;
+
+    //Associations
+    @ManyToMany(mappedBy = "restaurants", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Horaires> horaires;
+
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Reservation.class, mappedBy = "restaurant")
+    @JsonIgnore
+    private List<Reservation> reservation;
+
 
 }
