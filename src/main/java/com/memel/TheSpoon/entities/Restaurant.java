@@ -1,13 +1,10 @@
 package com.memel.TheSpoon.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -40,7 +37,7 @@ public class Restaurant {
     private String horaires;
 
     @ManyToOne
-    @JoinColumn(name = "proprietaire_id")
+    @JoinColumn(name = "personne_id")
     private Personne personne;
 
 }

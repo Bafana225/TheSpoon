@@ -5,10 +5,12 @@ import com.memel.TheSpoon.entities.Reservation;
 import com.memel.TheSpoon.repository.PersonneRepository;
 import com.memel.TheSpoon.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PersonneServiceImpl implements PersonneService{
 
     @Autowired

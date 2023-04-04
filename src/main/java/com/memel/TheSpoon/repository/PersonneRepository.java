@@ -10,8 +10,8 @@ import java.util.List;
 @RepositoryRestResource(path = "rest")
 public interface PersonneRepository extends JpaRepository<Personne, Long> {
     Personne findPersonneById(Long id);
-    void deletePersonById(Long id);
+    void deletePersonneById(Long id);
 
-    List<Personne> findByTypePersonId(Long typePersonId);
+    List<Personne> findByTypePersonneId(Long typePersonneId);
 
 }

@@ -36,9 +36,9 @@ public class Personne {
     @Column(length = 50)
     private String codePostal;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "personne")
     @JsonIgnore
-    private List<Restaurant> restaurants;
+    private List<Restaurant> restaurant;
 
     @OneToMany(mappedBy = "personne")
     @JsonIgnore
