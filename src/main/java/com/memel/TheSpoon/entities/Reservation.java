@@ -25,6 +25,9 @@ public class Reservation {
     @Column(length = 50)
     private Integer nbEnfants;
 
+    @Column
+    private boolean accessiblePmr;
+
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
