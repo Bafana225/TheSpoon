@@ -25,10 +25,6 @@ public class Reservation {
     @Column(length = 50)
     private Short nbEnfants;
 
-    @OneToMany
-    @JoinColumn(name = "horaire_id")
-    private Horaire horaire;
-
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;

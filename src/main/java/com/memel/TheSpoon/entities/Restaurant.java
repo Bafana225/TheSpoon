@@ -36,10 +36,4 @@ public class Restaurant {
     @Column(length = 50)
     private Double prixMoyen;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "restaurant_horaire",
-            joinColumns = @JoinColumn(name = "restaurant_id"),
-            inverseJoinColumns = @JoinColumn(name = "horaire_id"))
-    private List<Horaire> horaires = new ArrayList<>();
-
 }
