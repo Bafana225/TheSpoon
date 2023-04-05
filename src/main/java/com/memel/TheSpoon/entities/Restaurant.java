@@ -1,11 +1,9 @@
 package com.memel.TheSpoon.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +36,14 @@ public class Restaurant {
     private Double prixMoyen;
 
     //Associations
-    @ManyToMany(mappedBy = "restaurants", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "Horaires_Restaurant",
+            joinColumns = @JoinColumn(name = "id_restaurant"),
+            inverseJoinColumns = @JoinColumn(name = "id_horaires"))
+    @ToString.Exclude
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Horaires> horaires;
 
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Reservation.class, mappedBy = "restaurant")
-    @JsonIgnore
-    private List<Reservation> reservation;
 
 
 }

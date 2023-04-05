@@ -35,7 +35,7 @@ public class Horaires {
     private List<Restaurant> restaurants = new ArrayList<>();
 
 
-    //OneToMany -> Reservation
+
     @OneToMany(fetch = FetchType.LAZY, targetEntity = Reservation.class, mappedBy = "horaires")
     @JsonIgnore
     private List<Reservation> reservation;
