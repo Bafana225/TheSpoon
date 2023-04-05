@@ -5,38 +5,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Horaires")
+@Getter
+@Setter
+@Table(name = "horaires")
 public class Horaires {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_horaires")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "heure_debut")
+    private LocalTime heureDebut;
 
-    @Column
-    private String horaires;
+    @Column(name = "heure_fin")
+    private LocalTime heureFin;
 
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "Horaires",
-            joinColumns = @JoinColumn(name = "id_horaires"),
-            inverseJoinColumns = @JoinColumn(name = "id_restaurant"))
-    @ToString.Exclude
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Restaurant> restaurants = new ArrayList<>();
-
-
-
-    @OneToMany(fetch = FetchType.LAZY, targetEntity = Reservation.class, mappedBy = "horaires")
-    @JsonIgnore
-    private List<Reservation> reservation;
+    @ManyToMany(mappedBy = "horaires", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Restaurant> restaurants;
 }

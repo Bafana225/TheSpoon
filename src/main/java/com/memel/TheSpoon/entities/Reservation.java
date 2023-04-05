@@ -28,11 +28,20 @@ public class Reservation {
     @Column
     private boolean accessiblePmr;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-   @ManyToOne
-   @JoinColumn(name = "horaires_id")
-   private Horaires horaires;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "horaires_id")
+    private Horaires horaires;
 }
+
+
+
+
+
+
+
+
+
