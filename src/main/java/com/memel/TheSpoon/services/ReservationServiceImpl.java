@@ -43,29 +43,30 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
 
-    // Fonctions spécifiques
+    // fonctions spécifiques
     public List<Reservation> getReservationByIdRestaurant(Long id){
         List<Restaurant> restaurants = restaurantRepository.findAll();
         List<Reservation> reservations = new ArrayList<Reservation>();
         Restaurant restaurant = new Restaurant();
-        for(Restaurant r : restaurants){
-            if(r.getId() == id){
-                restaurant = r;
-                break;
+
+        for(int i = 0; i < restaurants.size(); i++){
+            if(restaurants.get(i).getId() == id){
+                restaurant = restaurants.get(i);
             }
         }
+
         reservations = restaurant.getReservation();
 
         return reservations;
     }
 
-    //Fonction 'getReservationByHoraire'
+    //getReservationByHoraire
     public List<Reservation> getReservationByHoraire(List<Reservation> reservations, Horaires horaire){
         List<Reservation> reservationsFiltre = new ArrayList<>();
 
-        for(Reservation reservation : reservations){
-            if(reservation.getHoraires() == horaire){
-                reservationsFiltre.add(reservation);
+        for(int i = 0; i < reservations.size(); i++){
+            if(reservations.get(i).getHoraires().equals(horaire)){
+                reservationsFiltre.add(reservations.get(i));
             }
         }
 

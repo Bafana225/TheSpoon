@@ -1,11 +1,9 @@
 package com.memel.TheSpoon.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,14 +34,11 @@ public class Restaurant {
     private Double prixMoyen;
 
     //Associations
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "Horaires_Restaurant",
-            joinColumns = @JoinColumn(name = "id_restaurant"),
-            inverseJoinColumns = @JoinColumn(name = "id_horaires"))
-    @ToString.Exclude
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "restaurants", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Horaires> horaires;
 
-
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Reservation.class, mappedBy = "restaurants")
+    @JsonIgnore
+    private List<Reservation> reservations;
 
 }
