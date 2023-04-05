@@ -41,8 +41,9 @@ public class Restaurant {
     @JsonIgnore
     private List<Reservation> reservations;
 
+    // Relation @ManyToMany entre Restaurant et Horaires
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "horaires",
+    @JoinTable(name = "restaurant_horaires",
             joinColumns = @JoinColumn(name = "restaurant_id"),
             inverseJoinColumns = @JoinColumn(name = "horaires_id"))
     private List<Horaires> horaires;
