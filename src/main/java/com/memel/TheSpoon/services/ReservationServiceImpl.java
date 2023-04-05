@@ -55,7 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
             }
         }
 
-        reservations = restaurant.getReservation();
+        reservations = restaurant.getReservations();
 
         return reservations;
     }
