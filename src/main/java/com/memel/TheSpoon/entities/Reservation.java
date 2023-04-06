@@ -8,6 +8,7 @@ import lombok.Setter;
 
 
 @Entity
+@Table(name = "Reservation")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -25,13 +26,16 @@ public class Reservation {
     @Column(length = 50)
     private Integer nbEnfants;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id")
+    /** ManyToOne Reservation --> Restaurant **/
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_restaurant")
     private Restaurant restaurant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "horaires_id")
+    /** ManyToOne Reservation --> Horaire **/
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_horaires")
     private Horaires horaires;
+
 }
 
 

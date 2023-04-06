@@ -16,15 +16,22 @@ public class Horaires {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_horaires")
     private Long id;
 
     @Column
     private String horaire;
 
-    @ManyToMany(mappedBy = "horaires", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Restaurant> restaurants;
-
-    @OneToMany(mappedBy = "horaires", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "horaires", fetch = FetchType.LAZY, targetEntity = Reservation.class)
     @JsonIgnore
     private List<Reservation> reservations;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Horaires [id=").append(id)
+                .append(", horaires=").append(horaire)
+                .append("]\n");
+        return sb.toString();
+    }
+
 }

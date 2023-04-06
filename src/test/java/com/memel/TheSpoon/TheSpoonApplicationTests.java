@@ -94,7 +94,7 @@ class TheSpoonApplicationTests {
 		Restaurant restaurant2 = new Restaurant();
 		restaurant2.setId(2L);
 		restaurant2.setNom("Au fourneau");
-		restaurant2.setAdresse("12 rue du port");
+		restaurant2.setAdresse("58 rue du port");
 		restaurant2.setNbCouverts(15);
 		restaurant2.setAccessibilitePmr(false);
 		restaurant2.setPrixMoyen(15.6);

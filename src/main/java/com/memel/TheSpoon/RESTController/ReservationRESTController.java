@@ -28,7 +28,7 @@ public class ReservationRESTController {
     }
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
-    public Reservation createReservation(@RequestBody Reservation reservation) {
+    public Reservation addReservation(@RequestBody Reservation reservation) {
         return reservationService.saveReservation(reservation);
     }
 

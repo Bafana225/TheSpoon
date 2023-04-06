@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS reservation (
   FOREIGN KEY (horaires_id) REFERENCES horaires(id)
 );
 
+
 -- Insertion des restaurants
 INSERT INTO restaurant (nom, adresse, nb_couverts, accessibilite_pmr, prix_moyen) VALUES ('Le Petit Bistrot', '10 rue du Moulin', 30, true, 25.0);
 INSERT INTO restaurant (nom, adresse, nb_couverts, accessibilite_pmr, prix_moyen) VALUES ('Chez Paul', '5 avenue des Champs', 50, false, 35.0);
@@ -48,10 +49,10 @@ INSERT INTO horaires (horaire) VALUES ('22h00-23h00');
 
 -- Insertion des réservations
 INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (2, 1, true, 1, 1);
-INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (4, 2, false, 2, 3);
-INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (3, 0, true, 1, 2);
-INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (2, 1, false, 3, 4);
-INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (5, 3, true, 2, 5);
+INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (4, 2, false, 2, 2);
+INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (3, 0, true, 3, 3);
+INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (2, 1, false, 4, 4);
+INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, restaurant_id, horaires_id) VALUES (5, 3, true, 5, 5);
 
 
 

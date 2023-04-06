@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "restaurant")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "restaurant")
 @Getter
 @Setter
 
@@ -18,7 +18,7 @@ public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id_restaurant")
     private long id;
 
     @Column(length = 50)
@@ -36,15 +36,17 @@ public class Restaurant {
     @Column(length = 50)
     private Double prixMoyen;
 
-    // Relation @OneToMany entre Restaurant et Reservation
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+
+    /** ManyToMany = Restaurants --> Horaires **/
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Horaires.class)
+    private List<Horaires> horaires;
+
+
+    /** OneToMany = Restaurants --> Réservations **/
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    /** On n'inclut pas le champ annoté dans la sortie JSON **/
     @JsonIgnore
     private List<Reservation> reservations;
 
-    // Relation @ManyToMany entre Restaurant et Horaires
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "restaurant_horaires",
-            joinColumns = @JoinColumn(name = "restaurant_id"),
-            inverseJoinColumns = @JoinColumn(name = "horaires_id"))
-    private List<Horaires> horaires;
+
 }

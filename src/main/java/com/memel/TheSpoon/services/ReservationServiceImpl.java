@@ -82,32 +82,32 @@ public class ReservationServiceImpl implements ReservationService {
         int sommePersonnesReservees = sommePersonnesByReservation(reservationsByHoraire) + reservation.getNbAdultes() + reservation.getNbEnfants();
 
         if (sommePersonnesReservees > restaurant.getNbCouverts()) {
-            return Arrays.asList("Nous n'avons  plus assez de places !", HttpStatus.FORBIDDEN);
+            return Arrays.asList("Nous n'avons  plus de places !", HttpStatus.FORBIDDEN);
         }
 
         reservationRepository.save(reservation);
-        return Arrays.asList("Réservation validée !", HttpStatus.OK);
+        return Arrays.asList("Réservation accepée !", HttpStatus.OK);
     }
 
 
     public Reservation updateReservationInServiceImpl(Reservation reservation) {
         Restaurant restaurant = restaurantRepository.findById(reservation.getRestaurant().getId())
-                .orElseThrow(() -> new RuntimeException("Restaurant non valide !"));
+                .orElseThrow(() -> new RuntimeException("Restaurant non valide, veuillez éffectuer une autre recherche !"));
         Horaires horaires = horairesRepository.findById(reservation.getHoraires().getId())
-                .orElseThrow(() -> new RuntimeException("Horaire non valide !"));
+                .orElseThrow(() -> new RuntimeException("Horaire n'est pas valide !"));
 
         Reservation existingReservation = reservationRepository.findById(reservation.getId())
-                .orElseThrow(() -> new RuntimeException("La réservation n'existe pas !"));
+                .orElseThrow(() -> new RuntimeException("Cette réservation n'existe pas !"));
 
         if (!restaurantService.checkOpened(restaurant, horaires)) {
-            throw new RuntimeException("Le restaurant est fermé !");
+            throw new RuntimeException("Le restaurant est actuellement fermé !");
         }
 
         List<Reservation> reservationsByHoraire = getReservationByHoraire(getReservationsByIdRestaurant(restaurant.getId()), horaires);
         int sommePersonnesReservees = sommePersonnesByReservation(reservationsByHoraire) + reservation.getNbAdultes() + reservation.getNbEnfants();
 
         if (sommePersonnesReservees > restaurant.getNbCouverts()) {
-            throw new RuntimeException("Nous n'avons malheureusement plus assez de places disponibles !");
+            throw new RuntimeException("Nous n'avons plus de places.");
         }
 
         existingReservation.setNbAdultes(reservation.getNbAdultes());
@@ -130,7 +130,7 @@ public class ReservationServiceImpl implements ReservationService {
                 .collect(Collectors.toList());
 
         if (reservations.isEmpty()) {
-            return Arrays.asList("Aucune réservation pour le restaurant : " + nomRestaurant, HttpStatus.NOT_FOUND);
+            return Arrays.asList("Aucune réservation pour " + nomRestaurant, HttpStatus.NOT_FOUND);
         }
 
         return Arrays.asList(reservations, HttpStatus.OK);
@@ -139,7 +139,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     public List<Reservation> getReservationsByIdRestaurant(Long idRestaurant) {
         Restaurant restaurant = restaurantRepository.findById(idRestaurant)
-                .orElseThrow(() -> new RuntimeException("Restaurant non valide !"));
+                .orElseThrow(() -> new RuntimeException("Restaurant non valide ou inexistant !"));
 
         return restaurant.getReservations();
     }
