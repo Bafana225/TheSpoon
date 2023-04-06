@@ -75,14 +75,14 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         if (!restaurantService.checkOpened(restaurant, horaires)) {
-            return Arrays.asList("Le restaurant est fermé ! ", HttpStatus.FORBIDDEN);
+            return Arrays.asList("Le restaurant est malheursement fermé. ", HttpStatus.FORBIDDEN);
         }
 
         List<Reservation> reservationsByHoraire = getReservationByHoraire(horaires.getReservations(), horaires);
         int sommePersonnesReservees = sommePersonnesByReservation(reservationsByHoraire) + reservation.getNbAdultes() + reservation.getNbEnfants();
 
         if (sommePersonnesReservees > restaurant.getNbCouverts()) {
-            return Arrays.asList("Nous n'avons malheureusement plus assez de places disponibles !", HttpStatus.FORBIDDEN);
+            return Arrays.asList("Nous n'avons  plus assez de places !", HttpStatus.FORBIDDEN);
         }
 
         reservationRepository.save(reservation);
