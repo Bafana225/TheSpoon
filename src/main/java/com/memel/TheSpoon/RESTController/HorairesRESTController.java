@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/horaires-api")
 @CrossOrigin
@@ -21,6 +23,7 @@ public class HorairesRESTController {
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    @Operation(summary = "Afficher l'horaire par son id")
     public Horaires getHorairesById(@PathVariable("id") Long id) {
         return horairesService.getHoraires(id);
     }
