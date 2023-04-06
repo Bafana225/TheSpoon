@@ -121,8 +121,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     // TEST SWAGGER
-    @ApiOperation(value = "Récupère les réservations pour un restaurant donné")
-    public List<Object> getReservationByNomRestaurant(@ApiParam(value = "Le nom du restaurant", required = true) String nomRestaurant) {
+    public List<Object> getReservationByNomRestaurant(String nomRestaurant) {
 
         String nomRestaurantNormalise = nomRestaurant.replaceAll("\\s+", "").toLowerCase();
 
