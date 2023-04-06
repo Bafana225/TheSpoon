@@ -2,6 +2,7 @@ package com.memel.TheSpoon.services;
 
 import com.memel.TheSpoon.entities.Horaires;
 import com.memel.TheSpoon.entities.Restaurant;
+import com.memel.TheSpoon.repository.HorairesRepository;
 import com.memel.TheSpoon.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,8 @@ import java.util.List;
 public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     RestaurantRepository restaurantRepository;
-
+    @Autowired
+    HorairesRepository horairesRepository;
     @Override
     public Restaurant saveRestaurant(Restaurant r) {
         return restaurantRepository.save(r);
@@ -66,8 +68,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     public List<Object> addHoraire(long id_Horaire, long id_Restaurant) {
-        Restaurant restaurant = getRestaurantById(id_Restaurant);
-        Horaires horaires = horairesRepository.findHoraireById(id_Horaire);
+        Restaurant restaurant = getRestaurant(id_Restaurant);
+        Horaires horaires = horairesRepository.findHorairesById(id_Horaire);
         if (restaurant == null) {
             return Arrays.asList("Restaurant non trouvé", HttpStatus.NOT_FOUND);
         }
