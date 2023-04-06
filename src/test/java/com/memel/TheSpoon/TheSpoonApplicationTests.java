@@ -35,19 +35,19 @@ class TheSpoonApplicationTests {
 		//Ajout d'horaire
 		Horaires horaires1 = new Horaires();
 		horaires1.setId(1L);
-		horaires1.setHoraire("01h - 02h");
+		horaires1.setHoraire("04h - 11h");
 		horairesService.addHoraire(horaires1);
 
 		Horaires horaires2 = new Horaires();
 		horaires2.setId(2L);
-		horaires2.setHoraire("04h - 05h");
+		horaires2.setHoraire("14h - 15h");
 		horairesService.addHoraire(horaires2);
 
-		//Ajout de restaurants
+		//Ajout restaurants
 		Restaurant restaurants1 = new Restaurant();
 		restaurants1.setId(1L);
-		restaurants1.setAdresse("Dinan");
-		restaurants1.setNom("Pizza");
+		restaurants1.setAdresse("Plougastel");
+		restaurants1.setNom("Creperie");
 		restaurants1.setNbCouverts(10);
 		restaurants1.setPrixMoyen(15.0);
 		restaurants1.setAccessibilitePmr(true);
@@ -55,26 +55,26 @@ class TheSpoonApplicationTests {
 
 		Restaurant restaurants2 = new Restaurant();
 		restaurants2.setId(2L);
-		restaurants2.setAdresse("Rennes");
-		restaurants2.setNom("Burger");
+		restaurants2.setAdresse("Paris");
+		restaurants2.setNom("Barlou Burger");
 		restaurants2.setNbCouverts(5);
 		restaurants2.setPrixMoyen(10.0);
 		restaurants2.setAccessibilitePmr(false);
 		restaurantService.addRestaurant(restaurants2);
 
-		//Ajout horaire au restos
+		//Ajout horaire aux restos
 		restaurantService.addHoraire(1L, 1L);
 		restaurantService.addHoraire(2L, 2L);
 
 		restaurants1 = restaurantService.getRestaurant(1L);
 		restaurants2 = restaurantService.getRestaurant(2L);
 
-		//Le cas ou le restaurant n'est pas ouvert
+		//Cas ou le restaurant n'est pas ouvert
 		Restaurant restaurant = restaurantService.getRestaurant(1L);
 		boolean result = restaurantService.checkOpened(restaurant, horaires2);
 		assertFalse(result);
 
-		//Le Cas ou le restaurant est ouvert
+		//Cas ou le restaurant est ouvert
 		Restaurant restaurant2 = restaurantService.getRestaurant(2L);
 		boolean result2 = restaurantService.checkOpened(restaurant2, horaires2);
 		assertTrue(result2);
@@ -85,15 +85,15 @@ class TheSpoonApplicationTests {
 
 		Restaurant restaurant1 = new Restaurant();
 		restaurant1.setId(1L);
-		restaurant1.setNom("Au Délice de Rennes");
-		restaurant1.setAdresse("47 rue de Saint-Anne");
+		restaurant1.setNom("Au Vieux port");
+		restaurant1.setAdresse("47 rue de la madelaine");
 		restaurant1.setNbCouverts(120);
 		restaurant1.setAccessibilitePmr(true);
 		restaurant1.setPrixMoyen(15.3);
 
 		Restaurant restaurant2 = new Restaurant();
 		restaurant2.setId(2L);
-		restaurant2.setNom("Chez Philou");
+		restaurant2.setNom("Au fourneau");
 		restaurant2.setAdresse("12 rue du port");
 		restaurant2.setNbCouverts(15);
 		restaurant2.setAccessibilitePmr(false);
@@ -148,7 +148,5 @@ class TheSpoonApplicationTests {
 		assertEquals(reservations1.getId(), reservations.get(0).getId());
 
 	}
-
-
 
 }
