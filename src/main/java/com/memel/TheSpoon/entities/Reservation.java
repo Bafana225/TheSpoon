@@ -26,6 +26,7 @@ public class Reservation {
     @Column(length = 50)
     private Integer nbEnfants;
 
+
     /** ManyToOne Reservation --> Restaurant **/
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_restaurant")
