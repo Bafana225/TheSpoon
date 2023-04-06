@@ -34,7 +34,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                     r.setHoraires(restaurant.getHoraires());
                     r.setReservations(restaurant.getReservations());
                     return restaurantRepository.save(r);
-                }).orElseThrow(() -> new RuntimeException("Restaurant non trouvé"));
+                }).orElseThrow(() -> new RuntimeException("Restaurant inexistant"));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.getHoraires().add(horaires);
         restaurantRepository.save(restaurant);
         horairesRepository.save(horaires);
-        return Arrays.asList("Horaire ajoutée avec succès à l'établissemnet : " + restaurant.getNom() + " " + "Heure : " + horaires.getHoraire(), HttpStatus.OK);
+        return Arrays.asList("Horaire a été ajouté avec succès : " + restaurant.getNom() + " " + "Heure : " + horaires.getHoraire(), HttpStatus.OK);
     }
 
     public boolean checkOpened(Restaurant restaurant, Horaires horaires) {

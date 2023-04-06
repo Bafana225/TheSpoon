@@ -1,13 +1,10 @@
 package com.memel.TheSpoon.services;
 
 import com.memel.TheSpoon.entities.Horaires;
-import com.memel.TheSpoon.entities.Reservation;
-import com.memel.TheSpoon.entities.Restaurant;
 import com.memel.TheSpoon.repository.HorairesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
