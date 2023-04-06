@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RestaurantService {
     Restaurant saveRestaurant(Restaurant r);
-    Restaurant updateRestaurant(Restaurant r);
+    Restaurant updateRestaurant(Long id, Restaurant r);
     void deleteRestaurant(Restaurant r);
     void deleteRestaurantById(Long id);
     Restaurant getRestaurant(Long id);

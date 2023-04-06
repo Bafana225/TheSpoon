@@ -34,7 +34,7 @@ public class ReservationRESTController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public Reservation updateReservation(@RequestBody Reservation reservation) {
-        return reservationService.updateReservation(reservation);
+        return reservationService.updateReservationInServiceImpl(reservation);
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.DELETE)

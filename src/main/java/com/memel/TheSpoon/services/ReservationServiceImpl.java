@@ -3,73 +3,166 @@ package com.memel.TheSpoon.services;
 import com.memel.TheSpoon.entities.Horaires;
 import com.memel.TheSpoon.entities.Reservation;
 import com.memel.TheSpoon.entities.Restaurant;
+import com.memel.TheSpoon.repository.HorairesRepository;
 import com.memel.TheSpoon.repository.ReservationRepository;
 import com.memel.TheSpoon.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
-    ReservationRepository reservationRepository;
+    private ReservationRepository reservationRepository;
     @Autowired
-    RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
+    @Autowired
+    private HorairesRepository horairesRepository;
+    @Autowired
+    private RestaurantServiceImpl restaurantService;
+
     @Override
     public Reservation saveReservation(Reservation r) {
         return reservationRepository.save(r);
     }
-    @Override
-    public Reservation updateReservation(Reservation r) {
-        return reservationRepository.save(r);
-    }
+
     @Override
     public void deleteReservation(Reservation r) {
         reservationRepository.delete(r);
     }
+
     @Override
     public void deleteReservationById(Long id) {
         reservationRepository.deleteById(id);
     }
+
     @Override
     public Reservation getReservation(Long id) {
-        return reservationRepository.findById(id).get();
+        return getReservationById(id);
     }
+
+    public Reservation getReservationById(Long id) {
+        return reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Réservation non trouvée !"));
+    }
+
     @Override
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
 
 
-    // fonctions spécifiques
-    public List<Reservation> getReservationByIdRestaurant(Long id){
-        List<Restaurant> restaurants = restaurantRepository.findAll();
-        List<Reservation> reservations = new ArrayList<Reservation>();
-        Restaurant restaurant = new Restaurant();
+    // FONCTIONS SPECIFIQUES
 
-        for(int i = 0; i < restaurants.size(); i++){
-            if(restaurants.get(i).getId() == id){
-                restaurant = restaurants.get(i);
-            }
+    public List<Object> addReservation(Reservation reservation) {
+
+        Restaurant restaurant = restaurantRepository.findById(reservation.getRestaurant().getId())
+                .orElseThrow(() -> new RuntimeException("Restaurant non valide !"));
+        Horaires horaires = horairesRepository.findById(reservation.getHoraires().getId())
+                .orElseThrow(() -> new RuntimeException("Horaire non valide !"));
+
+        if (restaurant == null) {
+            return Arrays.asList("Restaurant non valide !", HttpStatus.NOT_FOUND);
         }
 
-        reservations = restaurant.getReservations();
+        if (horaires == null) {
+            return Arrays.asList("Horaire non valide !", HttpStatus.NOT_FOUND);
+        }
 
-        return reservations;
+        if (!restaurantService.checkOpened(restaurant, horaires)) {
+            return Arrays.asList("Le restaurant est fermé ! ", HttpStatus.FORBIDDEN);
+        }
+
+        List<Reservation> reservationsByHoraire = getReservationByHoraire(horaires.getReservations(), horaires);
+        int sommePersonnesReservees = sommePersonnesByReservation(reservationsByHoraire) + reservation.getNbAdultes() + reservation.getNbEnfants();
+
+        if (sommePersonnesReservees > restaurant.getNbCouverts()) {
+            return Arrays.asList("Nous n'avons malheureusement plus assez de places disponibles !", HttpStatus.FORBIDDEN);
+        }
+
+        reservationRepository.save(reservation);
+        return Arrays.asList("Réservation validée !", HttpStatus.OK);
     }
 
-    //getReservationByHoraire
-    public List<Reservation> getReservationByHoraire(List<Reservation> reservations, Horaires horaire){
-        List<Reservation> reservationsFiltre = new ArrayList<>();
 
-        for(int i = 0; i < reservations.size(); i++){
-            if(reservations.get(i).getHoraires().equals(horaire)){
-                reservationsFiltre.add(reservations.get(i));
-            }
+    public Reservation updateReservationInServiceImpl(Reservation reservation) {
+        Restaurant restaurant = restaurantRepository.findById(reservation.getRestaurant().getId())
+                .orElseThrow(() -> new RuntimeException("Restaurant non valide !"));
+        Horaires horaires = horairesRepository.findById(reservation.getHoraires().getId())
+                .orElseThrow(() -> new RuntimeException("Horaire non valide !"));
+
+        Reservation existingReservation = reservationRepository.findById(reservation.getId())
+                .orElseThrow(() -> new RuntimeException("La réservation n'existe pas !"));
+
+        if (!restaurantService.checkOpened(restaurant, horaires)) {
+            throw new RuntimeException("Le restaurant est fermé !");
         }
 
-        return reservationsFiltre;
+        List<Reservation> reservationsByHoraire = getReservationByHoraire(getReservationsByIdRestaurant(restaurant.getId()), horaires);
+        int sommePersonnesReservees = sommePersonnesByReservation(reservationsByHoraire) + reservation.getNbAdultes() + reservation.getNbEnfants();
+
+        if (sommePersonnesReservees > restaurant.getNbCouverts()) {
+            throw new RuntimeException("Nous n'avons malheureusement plus assez de places disponibles !");
+        }
+
+        existingReservation.setNbAdultes(reservation.getNbAdultes());
+        existingReservation.setNbEnfants(reservation.getNbEnfants());
+        existingReservation.setRestaurant(reservation.getRestaurant());
+        existingReservation.setHoraires(reservation.getHoraires());
+
+        Reservation updatedReservation = reservationRepository.save(existingReservation);
+        return updatedReservation;
+    }
+
+    /**
+     * Récupérer le nombre de reservation en saisissant son nom
+     **/
+    public List<Object> getReservationByNomRestaurant(String nomRestaurant) {
+        /** On normalise le nom du restaurant en supprimant les espaces et en le mettant en minuscules **/
+        String nomRestaurantNormalise = nomRestaurant.replaceAll("\\s+", "").toLowerCase();
+
+        List<Reservation> reservations = restaurantService.getAllRestaurants().stream()
+                .filter(r -> r.getNom().replaceAll("\\s+", "").toLowerCase().equals(nomRestaurantNormalise))
+                .flatMap(r -> r.getReservations().stream())
+                .collect(Collectors.toList());
+
+        if (reservations.isEmpty()) {
+            return Arrays.asList("Aucune réservation pour le restaurant : " + nomRestaurant, HttpStatus.NOT_FOUND);
+        }
+
+        return Arrays.asList(reservations, HttpStatus.OK);
+    }
+
+    /**
+     * Récupérer toutes les réservations pour un restaurant donné en utilisant son identifiant.
+     **/
+    public List<Reservation> getReservationsByIdRestaurant(Long idRestaurant) {
+        Restaurant restaurant = restaurantRepository.findById(idRestaurant)
+                .orElseThrow(() -> new RuntimeException("Restaurant non valide !"));
+
+        return restaurant.getReservations();
+    }
+
+    /**
+     * Permet de récupérer l'ensemble des réservations à une horaire donnée
+     **/
+    public List<Reservation> getReservationByHoraire(List<Reservation> reservations, Horaires horaires) {
+        return reservations.stream()
+                .filter(r -> r.getHoraires().equals(horaires))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Permet de calculer la somme totale des personnes présentes dans toutes les réservations d'une liste de réservations donnée
+     **/
+    public int sommePersonnesByReservation(List<Reservation> reservations) {
+        return reservations.stream()
+                .mapToInt(r -> r.getNbAdultes() + r.getNbEnfants())
+                .sum();
     }
 }

@@ -25,9 +25,6 @@ public class Reservation {
     @Column(length = 50)
     private Integer nbEnfants;
 
-    @Column
-    private boolean accessiblePmr;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
