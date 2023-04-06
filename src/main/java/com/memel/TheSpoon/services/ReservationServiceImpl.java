@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
