@@ -58,6 +58,22 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
 
+
+    public List<Object> addHoraire(long id_Horaire, long id_Restaurant) {
+        Restaurant restaurant = getRestaurant(id_Restaurant);
+        Horaires horaires = horairesRepository.findHorairesById(id_Horaire);
+        if (restaurant == null) {
+            return Arrays.asList("Restaurant inexistant", HttpStatus.NOT_FOUND);
+        }
+        if (horaires == null) {
+            return Arrays.asList("Horaire inexistant", HttpStatus.NOT_FOUND);
+        }
+        restaurant.getHoraires().add(horaires);
+        restaurantRepository.save(restaurant);
+        horairesRepository.save(horaires);
+        return Arrays.asList("Horaire ajoutée avec succès à l'établissemnet : " + restaurant.getNom() + " " + "Heure : " + horaires.getHoraire(), HttpStatus.OK);
+    }
+
     public boolean checkOpened(Restaurant restaurant, Horaires horaires) {
         for (int i = 0; i < restaurant.getHoraires().size(); i++) {
             if (restaurant.getHoraires().get(i).getHoraire().equals(horaires.getHoraire())) {
@@ -66,22 +82,5 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
         return false;
     }
-
-    public List<Object> addHoraire(long id_Horaire, long id_Restaurant) {
-        Restaurant restaurant = getRestaurant(id_Restaurant);
-        Horaires horaires = horairesRepository.findHorairesById(id_Horaire);
-        if (restaurant == null) {
-            return Arrays.asList("Restaurant non trouvé", HttpStatus.NOT_FOUND);
-        }
-        if (horaires == null) {
-            return Arrays.asList("Horaire non trouvée", HttpStatus.NOT_FOUND);
-        }
-        restaurant.getHoraires().add(horaires);
-//        horaire.getRestaurants().add(restaurant);
-        restaurantRepository.save(restaurant);
-        horairesRepository.save(horaires);
-        return Arrays.asList("Horaire ajoutée à : " + restaurant.getNom() + " " + "Heure : " + horaires.getHoraire(), HttpStatus.OK);
-    }
-
 
 }
