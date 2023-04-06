@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -119,11 +120,10 @@ public class ReservationServiceImpl implements ReservationService {
         return updatedReservation;
     }
 
-    /**
-     * Récupérer le nombre de reservation en saisissant son nom
-     **/
-    public List<Object> getReservationByNomRestaurant(String nomRestaurant) {
-        /** On normalise le nom du restaurant en supprimant les espaces et en le mettant en minuscules **/
+    // TEST SWAGGER
+    @ApiOperation(value = "Récupère les réservations pour un restaurant donné")
+    public List<Object> getReservationByNomRestaurant(@ApiParam(value = "Le nom du restaurant", required = true) String nomRestaurant) {
+
         String nomRestaurantNormalise = nomRestaurant.replaceAll("\\s+", "").toLowerCase();
 
         List<Reservation> reservations = restaurantService.getAllRestaurants().stream()
@@ -138,9 +138,7 @@ public class ReservationServiceImpl implements ReservationService {
         return Arrays.asList(reservations, HttpStatus.OK);
     }
 
-    /**
-     * Récupérer toutes les réservations pour un restaurant donné en utilisant son identifiant.
-     **/
+
     public List<Reservation> getReservationsByIdRestaurant(Long idRestaurant) {
         Restaurant restaurant = restaurantRepository.findById(idRestaurant)
                 .orElseThrow(() -> new RuntimeException("Restaurant non valide !"));
@@ -148,18 +146,15 @@ public class ReservationServiceImpl implements ReservationService {
         return restaurant.getReservations();
     }
 
-    /**
-     * Permet de récupérer l'ensemble des réservations à une horaire donnée
-     **/
+    // Fonction 'getReservationByHoraire'
+
     public List<Reservation> getReservationByHoraire(List<Reservation> reservations, Horaires horaires) {
         return reservations.stream()
                 .filter(r -> r.getHoraires().equals(horaires))
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Permet de calculer la somme totale des personnes présentes dans toutes les réservations d'une liste de réservations donnée
-     **/
+
     public int sommePersonnesByReservation(List<Reservation> reservations) {
         return reservations.stream()
                 .mapToInt(r -> r.getNbAdultes() + r.getNbEnfants())
