@@ -57,6 +57,16 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.findAll();
     }
 
+    /**
+     * Ajoute un restaurant
+     * @param Restaurants L'object restaurant a ajouter
+     * @return L'object restaurant ajouter
+     */
+    public Restaurant addRestaurant(Restaurant Restaurants){
+        return restaurantRepository.save(Restaurants);
+    }
+
+
 
 
     public List<Object> addHoraire(long id_Horaire, long id_Restaurant) {

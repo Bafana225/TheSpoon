@@ -36,4 +36,15 @@ public class HorairesServiceImpl implements HorairesService {
     public List<Horaires> getAllHoraires() {
         return horairesRepository.findAll();
     }
+
+    /**
+     * Ajouter un horaire
+     * @param Horaires L'objet Horaire à ajouter
+     * @return l'object horaire ajouté
+     */
+    public Horaires addHoraire(Horaires Horaires){
+        return horairesRepository.save(Horaires);
+
+    }
+
 }
