@@ -14,7 +14,7 @@ public class RestaurantRESTController {
     @Autowired
     RestaurantService restaurantService;
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public List<Restaurant> getAllRestaurants() {
         return restaurantService.getAllRestaurants();
     }
