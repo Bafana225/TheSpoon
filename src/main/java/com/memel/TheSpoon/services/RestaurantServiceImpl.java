@@ -22,19 +22,9 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.save(r);
     }
 
-
-    public Restaurant updateRestaurant(Long id, Restaurant restaurant) {
-        return restaurantRepository.findById(id)
-                .map(r -> {
-                    r.setNom(restaurant.getNom());
-                    r.setAdresse(restaurant.getAdresse());
-                    r.setNbCouverts(restaurant.getNbCouverts());
-                    r.setPrixMoyen(restaurant.getPrixMoyen());
-                    r.setAccessibilitePmr(restaurant.getAccessibilitePmr());
-                    r.setHoraires(restaurant.getHoraires());
-                    r.setReservations(restaurant.getReservations());
-                    return restaurantRepository.save(r);
-                }).orElseThrow(() -> new RuntimeException("Restaurant inexistant"));
+    @Override
+    public Restaurant updateRestaurant(Restaurant r) {
+        return restaurantRepository.save(r);
     }
 
     @Override

@@ -28,11 +28,10 @@ public class RestaurantRESTController {
     public Restaurant createRestaurant(@RequestBody Restaurant restaurant) {
         return restaurantService.saveRestaurant(restaurant);
     }
-    @PutMapping("/{id}")
-    public Restaurant updateRestaurant(@PathVariable Long id, @RequestBody Restaurant restaurant) {
-        return restaurantService.updateRestaurant(id, restaurant);
+    @RequestMapping(method = RequestMethod.PUT)
+    public Restaurant updateProduit(@RequestBody Restaurant restaurant) {
+        return restaurantService.updateRestaurant(restaurant);
     }
-
 
     @DeleteMapping("/{id}")
     public void deleteRestaurant(@PathVariable("id") Long id) {
