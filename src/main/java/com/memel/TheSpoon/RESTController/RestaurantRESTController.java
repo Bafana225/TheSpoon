@@ -24,7 +24,7 @@ public class RestaurantRESTController {
         return restaurantService.getRestaurant(id);
     }
 
-    @PostMapping("/add")
+    @RequestMapping(method = RequestMethod.POST)
     public Restaurant createRestaurant(@RequestBody Restaurant restaurant) {
         return restaurantService.saveRestaurant(restaurant);
     }
