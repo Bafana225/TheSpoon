@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS restaurant (
   id_restaurant INT PRIMARY KEY AUTO_INCREMENT,
   nom VARCHAR(50),
+  imageUrl VARCHAR(100),
   adresse VARCHAR(300),
   nb_couverts INT,
   accessibilite_pmr BOOLEAN,
@@ -30,17 +31,17 @@ CREATE TABLE IF NOT EXISTS restaurant_horaires (
   FOREIGN KEY (horaires_id_horaires) REFERENCES horaires(id_horaires)
 );
 
-INSERT INTO restaurant (nom, adresse, nb_couverts, accessibilite_pmr, prix_moyen) VALUES
-  ('Le Petit Bistrot', '10 rue du Moulin', 30, true, 25.0),
-  ('Chez Paul', '5 avenue des Champs', 50, false, 35.0),
-  ('La Belle Epoque', '15 rue des Roses', 40, true, 45.0),
-  ('Le Comptoir', '7 rue de la Paix', 20, true, 20.0),
-  ('Le Grand Café', '2 place de la République', 60, false, 40.0),
-  ('La Table darthur', '14 avenue Victor Hugo', 30, true, 35.0),
-  ('Le Jardin des Saveurs', '18 rue de la Liberté', 50, true, 50.0),
-  ('Le Café de la Gare', '12 avenue de la Gare', 40, false, 30.0),
-  ('Le Coin Gourmand', '6 rue des Moulins', 25, true, 22.0),
-  ('La Terrasse ensoleillée', '22 boulevard des Alliés', 35, true, 42.0);
+INSERT INTO restaurant (nom, imageUrl, adresse, nb_couverts, accessibilite_pmr, prix_moyen) VALUES
+  ('Le Petit Bistrot','https://unsplash.com/fr/photos/ZgREXhl8ER0', '10 rue du Moulin', 30, true, 25.0),
+  ('Chez Paul','https://unsplash.com/fr/photos/1H30uRC1plc', '5 avenue des Champs', 50, false, 35.0),
+  ('La Belle Epoque','https://unsplash.com/fr/photos/0uAVsDcyD0M', '15 rue des Roses', 40, true, 45.0),
+  ('Le Comptoir','https://unsplash.com/fr/photos/Ciqxn7FE4vE','7 rue de la Paix', 20, true, 20.0),
+  ('Le Grand Café','https://unsplash.com/fr/photos/y3aP9oo9Pjc', '2 place de la République', 60, false, 40.0),
+  ('La Table darthur','https://unsplash.com/fr/photos/Pb9bUzH1nD8', '14 avenue Victor Hugo', 30, true, 35.0),
+  ('Le Jardin des Saveurs','https://unsplash.com/fr/photos/CAhjZmVk5H4', '18 rue de la Liberté', 50, true, 50.0),
+  ('Le Café de la Gare','https://unsplash.com/fr/photos/a0-VdrSx_r0', '12 avenue de la Gare', 40, false, 30.0),
+  ('Le Coin Gourmand','https://unsplash.com/fr/photos/GXXYkSwndP4', '6 rue des Moulins', 25, true, 22.0),
+  ('La Terrasse ensoleillée','https://unsplash.com/fr/photos/u2Lp8tXIcjw', '22 boulevard des Alliés', 35, true, 42.0);
 
 INSERT INTO horaires (id_horaires, horaires) VALUES
   (1, '13h00-14h00'),

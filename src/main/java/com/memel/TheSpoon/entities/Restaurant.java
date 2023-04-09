@@ -24,6 +24,9 @@ public class Restaurant {
     @Column(length = 50)
     private String nom;
 
+    @Column(length = 100)
+    private String imageUrl;
+
     @Column(length = 50)
     private String adresse;
 
