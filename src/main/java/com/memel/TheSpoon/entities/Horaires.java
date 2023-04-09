@@ -18,7 +18,6 @@ public class Horaires {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_horaires")
     private Long id;
-
     @Column
     private String horaire;
 

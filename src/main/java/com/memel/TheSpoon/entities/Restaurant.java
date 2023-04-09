@@ -24,7 +24,7 @@ public class Restaurant {
     @Column(length = 50)
     private String nom;
 
-    @Column(length = 100)
+    @Column(length = 300)
     private String imageUrl;
 
     @Column(length = 50)
@@ -40,14 +40,12 @@ public class Restaurant {
     private Double prixMoyen;
 
 
-    /** ManyToMany = Restaurants --> Horaires **/
+
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = Horaires.class)
     private List<Horaires> horaires;
 
 
-    /** OneToMany = Restaurants --> Réservations **/
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
-    /** On n'inclut pas le champ annoté dans la sortie JSON **/
     @JsonIgnore
     private List<Reservation> reservations;
 

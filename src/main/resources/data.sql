@@ -1,16 +1,16 @@
 CREATE TABLE IF NOT EXISTS restaurant (
   id_restaurant INT PRIMARY KEY AUTO_INCREMENT,
   nom VARCHAR(50),
-  imageUrl VARCHAR(100),
+  imageUrl VARCHAR(300),
   adresse VARCHAR(300),
-  nb_couverts INT,
-  accessibilite_pmr BOOLEAN,
-  prix_moyen INT
+  nbCouverts INT,
+  accessibilitePmr BOOLEAN,
+  prixMoyen INT
 );
 
 CREATE TABLE IF NOT EXISTS horaires (
   id_horaires INT PRIMARY KEY,
-  horaires VARCHAR(50)
+  horaire VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS reservation (
@@ -24,16 +24,16 @@ CREATE TABLE IF NOT EXISTS reservation (
   FOREIGN KEY (id_horaires) REFERENCES horaires(id_horaires)
 );
 
-CREATE TABLE IF NOT EXISTS restaurant_horaires (
-  restaurant_id_restaurant INT,
-  horaires_id_horaires INT,
-  FOREIGN KEY (restaurant_id_restaurant) REFERENCES restaurant(id_restaurant),
-  FOREIGN KEY (horaires_id_horaires) REFERENCES horaires(id_horaires)
+CREATE TABLE IF NOT EXISTS horaires (
+    id_horaires Long,
+    horaires String,
+    restaurant_id_restaurant Long,
+    FOREIGN KEY (restaurant_id_restaurant) REFERENCES restaurant(id_restaurant)
 );
 
 INSERT INTO restaurant (nom, imageUrl, adresse, nb_couverts, accessibilite_pmr, prix_moyen) VALUES
   ('Le Petit Bistrot','https://unsplash.com/fr/photos/ZgREXhl8ER0', '10 rue du Moulin', 30, true, 25.0),
-  ('Chez Paul','https://unsplash.com/fr/photos/1H30uRC1plc', '5 avenue des Champs', 50, false, 35.0),
+  ('Chez Paul','https://res.cloudinary.com/tf-lab/image/upload/restaurant/b7d768a5-2702-44b4-860f-46bddd66d4c2/e964be7b-039a-4403-bb8e-ea5af5afcdd8.jpg', '5 avenue des Champs', 50, false, 35.0),
   ('La Belle Epoque','https://unsplash.com/fr/photos/0uAVsDcyD0M', '15 rue des Roses', 40, true, 45.0),
   ('Le Comptoir','https://unsplash.com/fr/photos/Ciqxn7FE4vE','7 rue de la Paix', 20, true, 20.0),
   ('Le Grand Café','https://unsplash.com/fr/photos/y3aP9oo9Pjc', '2 place de la République', 60, false, 40.0),
