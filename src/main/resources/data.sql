@@ -9,29 +9,30 @@ CREATE TABLE IF NOT EXISTS restaurant (
 );
 
 CREATE TABLE IF NOT EXISTS horaires (
-  id_horaires INT PRIMARY KEY,
+  id_horaires INT PRIMARY KEY AUTO_INCREMENT,
   horaire VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS restaurant_horaires (
+    id INT NOT NULL AUTO_INCREMENT,
+    id_restaurant INT NOT NULL,
+    id_horaires INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_restaurant) REFERENCES restaurants(id),
+    FOREIGN KEY (id_horaires) REFERENCES horaires(id_horaires)
 );
 
 CREATE TABLE IF NOT EXISTS reservation (
   id_reservation INT PRIMARY KEY AUTO_INCREMENT,
   nbAdultes INT,
   nbEnfants INT,
-  accessiblePmr BOOLEAN,
   id_restaurant INT,
   id_horaires INT,
   FOREIGN KEY (id_restaurant) REFERENCES restaurant(id_restaurant),
   FOREIGN KEY (id_horaires) REFERENCES horaires(id_horaires)
 );
 
-CREATE TABLE IF NOT EXISTS horaires (
-    id_horaires Long,
-    horaires String,
-    restaurant_id_restaurant Long,
-    FOREIGN KEY (restaurant_id_restaurant) REFERENCES restaurant(id_restaurant)
-);
-
-INSERT INTO restaurant (nom, imageUrl, adresse, nb_couverts, accessibilite_pmr, prix_moyen) VALUES
+INSERT INTO restaurant (nom, imageUrl, adresse, nbCouverts, accessibilitePmr, prixMoyen) VALUES
   ('Le Petit Bistrot','https://unsplash.com/fr/photos/ZgREXhl8ER0', '10 rue du Moulin', 30, true, 25.0),
   ('Chez Paul','https://res.cloudinary.com/tf-lab/image/upload/restaurant/b7d768a5-2702-44b4-860f-46bddd66d4c2/e964be7b-039a-4403-bb8e-ea5af5afcdd8.jpg', '5 avenue des Champs', 50, false, 35.0),
   ('La Belle Epoque','https://unsplash.com/fr/photos/0uAVsDcyD0M', '15 rue des Roses', 40, true, 45.0),
@@ -43,21 +44,23 @@ INSERT INTO restaurant (nom, imageUrl, adresse, nb_couverts, accessibilite_pmr, 
   ('Le Coin Gourmand','https://unsplash.com/fr/photos/GXXYkSwndP4', '6 rue des Moulins', 25, true, 22.0),
   ('La Terrasse ensoleillée','https://unsplash.com/fr/photos/u2Lp8tXIcjw', '22 boulevard des Alliés', 35, true, 42.0);
 
-INSERT INTO horaires (id_horaires, horaires) VALUES
-  (1, '13h00-14h00'),
-  (2, '19h00-20h00'),
-  (3, '20h00-21h00'),
-  (4, '21h00-22h00'),
-  (5, '22h00-23h00');
+INSERT INTO horaires (horaire) VALUES
+  ('13h00-14h00'),
+  ('19h00-20h00'),
+  ('20h00-21h00'),
+  ('21h00-22h00'),
+  ('22h00-23h00');
 
-INSERT INTO reservation (nbAdultes, nbEnfants, accessiblePmr, id_restaurant, id_horaires) VALUES
-  (2, 1, true, 1, 1),
-  (4, 2, false, 2, 2),
-  (3, 0, true, 3, 3),
-  (2, 1, false, 4, 4),
-  (5, 3, true, 5, 5);
 
-INSERT INTO restaurant_horaires (restaurant_id_restaurant, horaires_id_horaires) VALUES
+
+INSERT INTO reservation (nbAdultes, nbEnfants, id_restaurant, id_horaires) VALUES
+  (2, 1, 1, 1),
+  (4, 2, 2, 2),
+  (3, 0, 3, 3),
+  (2, 1, 4, 4),
+  (5, 3, 5, 5);
+
+INSERT INTO restaurant_horaires (id_restaurant, id_horaires) VALUES
   (1, 1),
   (1, 2),
   (1, 3),
