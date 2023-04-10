@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS reservation (
 );
 
 INSERT INTO restaurant (nom, imageUrl, adresse, nbCouverts, accessibilitePmr, prixMoyen) VALUES
-  ('Le Petit Bistrot','https://unsplash.com/fr/photos/ZgREXhl8ER0', '10 rue du Moulin', 30, true, 25.0),
-  ('Chez Paul','https://res.cloudinary.com/tf-lab/image/upload/restaurant/b7d768a5-2702-44b4-860f-46bddd66d4c2/e964be7b-039a-4403-bb8e-ea5af5afcdd8.jpg', '5 avenue des Champs', 50, false, 35.0),
+  ('Le Petit Bistrot','https://unsplash.com/fr/photos/0uAVsDcyD0M', '10 rue du Moulin', 30, true, 25.0),
+  ('Chez Paul','https://unsplash.com/fr/photos/0uAVsDcyD0M', '5 avenue des Champs', 50, false, 35.0),
   ('La Belle Epoque','https://unsplash.com/fr/photos/0uAVsDcyD0M', '15 rue des Roses', 40, true, 45.0),
   ('Le Comptoir','https://unsplash.com/fr/photos/Ciqxn7FE4vE','7 rue de la Paix', 20, true, 20.0),
   ('Le Grand Café','https://unsplash.com/fr/photos/y3aP9oo9Pjc', '2 place de la République', 60, false, 40.0),
