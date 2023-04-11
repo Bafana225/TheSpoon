@@ -1,24 +1,15 @@
-CREATE TABLE IF NOT EXISTS restaurant (
-  id_restaurant INT PRIMARY KEY AUTO_INCREMENT,
-  nom VARCHAR(50),
-  image_url VARCHAR(300),
-  adresse VARCHAR(50),
-  nb_couverts INT,
-  accessibilite_pmr BOOLEAN,
-  prix_moyen FLOAT
+CREATE TABLE Horaires (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    jour VARCHAR(50),
+    heure_debut VARCHAR(50),
+    heure_fin VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS horaires (
-  id_horaires INT PRIMARY KEY AUTO_INCREMENT,
-  horaire VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS restaurant_horaires (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    restaurant_id INT NOT NULL,
-    horaires_id INT NOT NULL,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id_restaurant),
-    FOREIGN KEY (horaires_id) REFERENCES horaires(id_horaires)
+CREATE TABLE Restaurant (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(50),
+    adresse VARCHAR(50),
+    telephone VARCHAR(50)
 );
 
 CREATE TABLE Reservation (
@@ -30,6 +21,15 @@ CREATE TABLE Reservation (
     FOREIGN KEY (heure_reservation_id) REFERENCES Horaires(id),
     FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id)
 );
+
+CREATE TABLE IF NOT EXISTS restaurant_horaires (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id INT NOT NULL,
+    horaires_id INT NOT NULL,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id_restaurant),
+    FOREIGN KEY (horaires_id) REFERENCES horaires(id_horaires)
+);
+
 
 
 
