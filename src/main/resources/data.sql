@@ -3,6 +3,14 @@ CREATE TABLE IF NOT EXISTS Horaires (
     horaire VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS Restaurant_horaires (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id INT NOT NULL,
+    horaires_id INT NOT NULL,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id),
+    FOREIGN KEY (horaires_id) REFERENCES horaires(id)
+);
+
 CREATE TABLE Restaurant (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(255) NOT NULL,
@@ -11,14 +19,6 @@ CREATE TABLE Restaurant (
     nb_couverts INT NOT NULL,
     accessibilite_pmr BOOLEAN NOT NULL,
     prix_moyen FLOAT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Restaurant_horaires (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    restaurant_id INT NOT NULL,
-    horaires_id INT NOT NULL,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id),
-    FOREIGN KEY (horaires_id) REFERENCES horaires(id)
 );
 
 CREATE TABLE Reservation (
