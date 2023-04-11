@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "restaurant")
@@ -31,23 +32,17 @@ public class Restaurant {
     private String adresse;
 
     @Column(length = 50)
-    private Integer nbCouverts;
+    private int nbCouverts;
 
     @Column(length = 50)
-    private Boolean accessibilitePmr;
+    private boolean accessibilitePmr;
 
     @Column(length = 50)
-    private Double prixMoyen;
+    private float prixMoyen;
 
+    ///
 
-
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Horaires.class)
-    private List<Horaires> horaires;
-
-
-    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Reservation> reservations;
-
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    private Set<Horaires> horaires;
 
 }

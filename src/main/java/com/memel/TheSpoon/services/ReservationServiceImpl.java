@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +32,22 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation saveReservation(Reservation r) {
         return reservationRepository.save(r);
     }
+
+    @Override
+    public Reservation updateReservationInServiceImpl(Reservation r) {
+        Optional<Reservation> existingReservation = reservationRepository.findById(r.getId());
+        if (existingReservation.isPresent()) {
+            Reservation updatedReservation = existingReservation.get();
+            updatedReservation.setRestaurant(r.getRestaurant());
+            updatedReservation.setNbAdultes(r.getNbAdultes());
+            updatedReservation.setNbEnfants(r.getNbEnfants());
+            updatedReservation.setHeureReservation(r.getHeureReservation());
+            updatedReservation.setRestaurant(r.getRestaurant());
+            return reservationRepository.save(updatedReservation);
+        }
+        return null;
+    }
+
 
     @Override
     public void deleteReservation(Reservation r) {
@@ -59,103 +77,16 @@ public class ReservationServiceImpl implements ReservationService {
 
     // FONCTIONS SPECIFIQUES
 
-    public List<Object> addReservation(Reservation reservation) {
+    public Reservation addReservation(Reservation reservation) { return reservationRepository.save(reservation); }
 
-        Restaurant restaurant = restaurantRepository.findById(reservation.getRestaurant().getId())
-                .orElseThrow(() -> new RuntimeException("Restaurant non valide !"));
-        Horaires horaires = horairesRepository.findById(reservation.getHoraires().getId())
-                .orElseThrow(() -> new RuntimeException("Horaire non valide !"));
 
-        if (restaurant == null) {
-            return Arrays.asList("Restaurant non valide !", HttpStatus.NOT_FOUND);
+    public List<Reservation> getReservationsByIdRestaurant(long id) {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        if (restaurant.isPresent()) {
+            Optional<List<Reservation>> listeReservation = reservationRepository.findByRestaurant(restaurant.get());
+            return listeReservation.orElse(new ArrayList<>());
         }
-
-        if (horaires == null) {
-            return Arrays.asList("Horaire non valide !", HttpStatus.NOT_FOUND);
-        }
-
-        if (!restaurantService.checkOpened(restaurant, horaires)) {
-            return Arrays.asList("Le restaurant est malheursement fermé. ", HttpStatus.FORBIDDEN);
-        }
-
-        List<Reservation> reservationsByHoraire = getReservationByHoraire(horaires.getReservations(), horaires);
-        int sommePersonnesReservees = sommePersonnesByReservation(reservationsByHoraire) + reservation.getNbAdultes() + reservation.getNbEnfants();
-
-        if (sommePersonnesReservees > restaurant.getNbCouverts()) {
-            return Arrays.asList("Nous n'avons  plus de places !", HttpStatus.FORBIDDEN);
-        }
-
-        reservationRepository.save(reservation);
-        return Arrays.asList("Réservation accepée !", HttpStatus.OK);
+        return new ArrayList<>();
     }
 
-
-    public Reservation updateReservationInServiceImpl(Reservation reservation) {
-        Restaurant restaurant = restaurantRepository.findById(reservation.getRestaurant().getId())
-                .orElseThrow(() -> new RuntimeException("Restaurant non valide, veuillez éffectuer une autre recherche !"));
-        Horaires horaires = horairesRepository.findById(reservation.getHoraires().getId())
-                .orElseThrow(() -> new RuntimeException("Horaire n'est pas valide !"));
-
-        Reservation existingReservation = reservationRepository.findById(reservation.getId())
-                .orElseThrow(() -> new RuntimeException("Cette réservation n'existe pas !"));
-
-        if (!restaurantService.checkOpened(restaurant, horaires)) {
-            throw new RuntimeException("Le restaurant est actuellement fermé !");
-        }
-
-        List<Reservation> reservationsByHoraire = getReservationByHoraire(getReservationsByIdRestaurant(restaurant.getId()), horaires);
-        int sommePersonnesReservees = sommePersonnesByReservation(reservationsByHoraire) + reservation.getNbAdultes() + reservation.getNbEnfants();
-
-        if (sommePersonnesReservees > restaurant.getNbCouverts()) {
-            throw new RuntimeException("Nous n'avons plus de places.");
-        }
-
-        existingReservation.setNbAdultes(reservation.getNbAdultes());
-        existingReservation.setNbEnfants(reservation.getNbEnfants());
-        existingReservation.setRestaurant(reservation.getRestaurant());
-        existingReservation.setHoraires(reservation.getHoraires());
-
-        Reservation updatedReservation = reservationRepository.save(existingReservation);
-        return updatedReservation;
-    }
-
-    // TEST SWAGGER
-    public List<Object> getReservationByNomRestaurant(String nomRestaurant) {
-
-        String nomRestaurantNormalise = nomRestaurant.replaceAll("\\s+", "").toLowerCase();
-
-        List<Reservation> reservations = restaurantService.getAllRestaurants().stream()
-                .filter(r -> r.getNom().replaceAll("\\s+", "").toLowerCase().equals(nomRestaurantNormalise))
-                .flatMap(r -> r.getReservations().stream())
-                .collect(Collectors.toList());
-
-        if (reservations.isEmpty()) {
-            return Arrays.asList("Aucune réservation pour " + nomRestaurant, HttpStatus.NOT_FOUND);
-        }
-
-        return Arrays.asList(reservations, HttpStatus.OK);
-    }
-
-
-    public List<Reservation> getReservationsByIdRestaurant(Long idRestaurant) {
-        Restaurant restaurant = restaurantRepository.findById(idRestaurant)
-                .orElseThrow(() -> new RuntimeException("Restaurant non valide ou inexistant !"));
-
-        return restaurant.getReservations();
-    }
-
-    // Fonction 'getReservationByHoraire'
-
-    public List<Reservation> getReservationByHoraire(List<Reservation> reservations, Horaires horaires) {
-        return reservations.stream()
-                .filter(r -> r.getHoraires().equals(horaires))
-                .collect(Collectors.toList());
-    }
-
-
-    public int sommePersonnesByReservation(List<Reservation> reservations) {
-        return reservations.stream()
-                .mapToInt(r -> r.getNbAdultes() + r.getNbEnfants())
-                .sum();
-    }
 }

@@ -1,6 +1,7 @@
 package com.memel.TheSpoon.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,15 +28,16 @@ public class Reservation {
     private Integer nbEnfants;
 
 
-    /** ManyToOne Reservation --> Restaurant **/
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_restaurant")
+    @ManyToOne()
+    @NotNull
+    private Horaires heureReservation;
+
+    //
+
+    @ManyToOne()
+    @NotNull
     private Restaurant restaurant;
 
-    /** ManyToOne Reservation --> Horaire **/
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_horaires")
-    private Horaires horaires;
 
 }
 

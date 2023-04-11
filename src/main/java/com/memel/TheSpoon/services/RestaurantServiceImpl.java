@@ -74,13 +74,4 @@ public class RestaurantServiceImpl implements RestaurantService {
         return Arrays.asList("Horaire a été ajouté avec succès : " + restaurant.getNom() + " " + "Heure : " + horaires.getHoraire(), HttpStatus.OK);
     }
 
-    public boolean checkOpened(Restaurant restaurant, Horaires horaires) {
-        for (int i = 0; i < restaurant.getHoraires().size(); i++) {
-            if (restaurant.getHoraires().get(i).getHoraire().equals(horaires.getHoraire())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

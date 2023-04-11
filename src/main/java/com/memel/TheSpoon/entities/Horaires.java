@@ -21,6 +21,8 @@ public class Horaires {
     @Column
     private String horaire;
 
+    ///
+
     public Horaires(String valeur) {
         this.horaire = valeur;
     }
