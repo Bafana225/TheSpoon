@@ -21,16 +21,9 @@ public class Horaires {
     @Column
     private String horaire;
 
-    @OneToMany(mappedBy = "horaires", fetch = FetchType.LAZY, targetEntity = Reservation.class)
-    @JsonIgnore
-    private List<Reservation> reservations;
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Horaires [id=").append(id)
-                .append(", horaires=").append(horaire)
-                .append("]\n");
-        return sb.toString();
+    public Horaires(String valeur) {
+        this.horaire = valeur;
     }
+
 
 }

@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS restaurant (
   image_url VARCHAR(300),
   adresse VARCHAR(300),
   nb_couverts INT,
-  accessibilite_pmr BOOLEAN,
+  accessibilite_pmr BOOLEAN CHECK (accessibilite_pmr IN (true, false)),
   prix_moyen DOUBLE
 );
 
