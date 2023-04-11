@@ -19,7 +19,6 @@ public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_restaurant")
     private long id;
 
     @Column(length = 50)
