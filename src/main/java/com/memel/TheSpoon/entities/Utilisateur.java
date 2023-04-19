@@ -39,6 +39,6 @@ public class Utilisateur {
 
     @ManyToOne
     @JoinColumn(name="type")
-    private Usertype type;
+    private UserType type;
 
 }

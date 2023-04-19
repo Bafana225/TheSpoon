@@ -1,3 +1,53 @@
+CREATE TABLE usertype (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  usertype VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE `utilisateur` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `type` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE horaire (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    horaire VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE `restaurant` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `adresse` varchar(255) DEFAULT NULL,
+  `nbretoile` int(11) DEFAULT NULL,
+  `nbrplace` int(11) DEFAULT NULL,
+  `nom` varchar(255) DEFAULT NULL,
+  `pmr` bit(1) DEFAULT NULL,
+  `prix` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `plagehoraire` (
+  `id_plagehoraire` int(11) NOT NULL AUTO_INCREMENT,
+  `id_restaurant` int(11) NOT NULL,
+  `id_horaire` int(11) NOT NULL,
+  PRIMARY KEY (`id_plagehoraire`),
+  FOREIGN KEY (`id_restaurant`) REFERENCES `restaurant` (`id`),
+  FOREIGN KEY (`id_horaire`) REFERENCES `horaire` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `reservation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nbr_adulte` int(11) NOT NULL,
+  `nbr_enfant` int(11) NOT NULL,
+  `horaire` int(11) NOT NULL,
+  `restaurant` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`horaire`) REFERENCES `plagehoraire`(`id`),
+  FOREIGN KEY (`restaurant`) REFERENCES `restaurant`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 INSERT INTO `usertype`(`usertype`) VALUES ('restaurateur');
 INSERT INTO `usertype`(`usertype`) VALUES ('client');
 
