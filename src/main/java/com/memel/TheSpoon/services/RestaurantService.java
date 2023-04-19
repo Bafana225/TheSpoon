@@ -1,11 +1,8 @@
 package com.memel.TheSpoon.services;
 
-import com.memel.TheSpoon.entities.Horaires;
 import com.memel.TheSpoon.entities.Reservation;
 import com.memel.TheSpoon.entities.Restaurant;
-import com.memel.TheSpoon.repository.HorairesRepository;
 import com.memel.TheSpoon.repository.RestaurantRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

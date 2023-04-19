@@ -1,7 +1,12 @@
 package com.memel.TheSpoon.RESTController;
 
 import com.memel.TheSpoon.entities.Restaurant;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.memel.TheSpoon.services.RestaurantService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +16,7 @@ import java.util.List;
 @CrossOrigin
 public class RestaurantRESTController {
     private final RestaurantService restaurantService;
-
-    public RestaurantController(RestaurantService restaurantService) {
+    public RestaurantRESTController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
     }
 

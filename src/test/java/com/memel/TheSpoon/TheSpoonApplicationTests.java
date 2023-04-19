@@ -16,14 +16,14 @@ class TheSpoonApplicationTests {
 	}
 
 
-	@Autowired
-	private RestaurantService restaurantService;
-
-	@Autowired
-	private ReservationService reservationService;
-
-	@Autowired
-	private HorairesService horairesService;
+//	@Autowired
+//	private RestaurantService restaurantService;
+//
+//	@Autowired
+//	private ReservationService reservationService;
+//
+//	@Autowired
+//	private HorairesService horairesService;
 
 
 //	@Test

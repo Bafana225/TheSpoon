@@ -1,21 +1,26 @@
 package com.memel.TheSpoon.RESTController;
 
+import com.memel.TheSpoon.DTO.ReservationDTO;
 import com.memel.TheSpoon.entities.Reservation;
 import com.memel.TheSpoon.services.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/reservations-api")
-@CrossOrigin
+@RequestMapping("/reservation")
+@Validated
 public class ReservationRESTController {
     private final ReservationService reservationService;
 
-    public ReservationController(ReservationService reservationService) {
+    public ReservationRESTController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
