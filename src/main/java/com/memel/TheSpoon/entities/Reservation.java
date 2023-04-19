@@ -1,6 +1,7 @@
 package com.memel.TheSpoon.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,35 +10,35 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "Reservation")
+@Table(name = "reservation")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private long id;
+    private Long id;
 
-    @Column(length = 50)
-    private Integer nbAdultes;
-
-    @Column(length = 50)
-    private Integer nbEnfants;
-
-
-    @ManyToOne()
     @NotNull
-    private Horaires heureReservation;
+    @Min(1)
+    private Integer nbrAdulte;
 
-    //
-
-    @ManyToOne()
     @NotNull
+    @Min(0)
+    private Integer nbrEnfant;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name="horaire")
+    private Horaires horaires;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name="restaurant")
     private Restaurant restaurant;
-
 
 }
 

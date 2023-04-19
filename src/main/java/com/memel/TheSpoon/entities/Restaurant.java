@@ -1,7 +1,9 @@
 package com.memel.TheSpoon.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -19,29 +21,46 @@ public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(length = 50)
+    @Column(length = 60)
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String nom;
 
-    @Column(length = 300)
-    private String imageUrl;
-
-    @Column(length = 50)
+    @Column(length = 120)
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String adresse;
 
-    @Column(length = 50)
-    private int nbCouverts;
+    @NotNull
+    @Min(10)
+    @Max(100)
+    private Integer nbrplace;
 
-    @Column(length = 50)
-    private boolean accessibilitePmr;
+    @Min(0)
+    @Max(3)
+    private Integer nbretoile;
 
-    @Column(length = 50)
-    private float prixMoyen;
+    @NotNull
+    private Boolean pmr;
 
-    ///
+    @NotNull
+    @Min(1)
+    private Integer prix;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-    private Set<Horaires> horaires;
+    @OneToMany(targetEntity = Reservation.class, mappedBy ="restaurant", fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="plagehoraire",
+            joinColumns = {@JoinColumn(name="idRestaurant")},
+            inverseJoinColumns = {@JoinColumn(name="idHoraire")})
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Horaires> horaires = new ArrayList<>();
+
 
 }
