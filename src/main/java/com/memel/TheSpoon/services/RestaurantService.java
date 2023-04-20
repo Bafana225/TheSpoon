@@ -2,6 +2,7 @@ package com.memel.TheSpoon.services;
 
 import com.memel.TheSpoon.entities.Reservation;
 import com.memel.TheSpoon.entities.Restaurant;
+import com.memel.TheSpoon.repository.ReservationRepository;
 import com.memel.TheSpoon.repository.RestaurantRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,14 @@ import java.util.List;
 public class RestaurantService {
 
     private RestaurantRepository restaurantRepository;
+
+    private ReservationRepository reservationRepository;
     private ReservationService reservationService;
 
     public RestaurantService(RestaurantRepository restaurantRepository, ReservationService reservationService) {
         this.restaurantRepository = restaurantRepository;
         this.reservationService = reservationService;
+        this.reservationRepository = reservationRepository;
     }
 
     /**
@@ -67,4 +71,5 @@ public class RestaurantService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant inexistant");
         }
     }
+
 }

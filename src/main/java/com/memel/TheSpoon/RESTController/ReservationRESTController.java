@@ -15,11 +15,10 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/reservation")
+@RequestMapping("/api-reservation")
 @Validated
 public class ReservationRESTController {
     private final ReservationService reservationService;
-
     public ReservationRESTController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
@@ -82,4 +81,16 @@ public class ReservationRESTController {
         this.reservationService.supResaById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/{idResto}/reservations")
+    @Operation(summary = "Liste les réservations d'un restaurant", description = "Liste toutes les réservations d'un restaurant")
+    public ResponseEntity<List<Reservation>> getReservationsByRestoId(@PathVariable("idResto") Long idResto) {
+        List<Reservation> reservations = reservationService.getReservationsByIdResto(idResto);
+        if (reservations.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(reservations, HttpStatus.OK);
+        }
+    }
+
 }

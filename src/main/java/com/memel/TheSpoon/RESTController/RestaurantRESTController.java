@@ -1,5 +1,6 @@
 package com.memel.TheSpoon.RESTController;
 
+import com.memel.TheSpoon.entities.Reservation;
 import com.memel.TheSpoon.entities.Restaurant;
 import com.memel.TheSpoon.services.RestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -63,6 +64,5 @@ public class RestaurantRESTController {
         this.restaurantService.supRestoById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 }
