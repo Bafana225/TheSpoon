@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,6 +23,19 @@ public class ReservationRESTController {
     public ReservationRESTController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
+
+    @GetMapping("get/{id}")
+    @Operation(summary = "Récupère une réservation", description = "Récupère une réservation à partir de son id")
+    public ResponseEntity<Reservation> getReservationById(@PathVariable("id") @Positive Long id) {
+        List<Reservation> reservations = this.reservationService.getReservationsByIdResto(id);
+        if (reservations.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation non trouvée");
+        }
+        Reservation reservation = reservations.get(0);
+        return ResponseEntity.ok().body(reservation);
+    }
+
+
 
     /**
      * Liste toutes les reservations
@@ -51,7 +65,7 @@ public class ReservationRESTController {
      * @return Reservation <obj>
      */
     @PostMapping("/ajouter")
-    @Operation(summary = "Cré une réservation", description = "Cré une réservation à partir des id Horaire et Restaurant")
+    @Operation(summary = "Crée une réservation", description = "Cré une réservation à partir des id Horaire et Restaurant")
     public ResponseEntity<Reservation> ajouterResa(@Valid @RequestBody ReservationDTO resa){
         Reservation retour = this.reservationService.setResa(resa);
         return new ResponseEntity<>(retour, HttpStatus.OK);

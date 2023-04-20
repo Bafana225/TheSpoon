@@ -40,10 +40,6 @@ public class Restaurant {
     @Max(100)
     private Integer nbrplace;
 
-    @Min(0)
-    @Max(3)
-    private Integer nbretoile;
-
     @NotNull
     private Boolean pmr;
 
@@ -59,8 +55,6 @@ public class Restaurant {
     @JoinTable(name="horaire",
             joinColumns = {@JoinColumn(name="idRestaurant")},
             inverseJoinColumns = {@JoinColumn(name="idHoraire")})
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Horaires> horaires = new ArrayList<>();
-
 
 }
