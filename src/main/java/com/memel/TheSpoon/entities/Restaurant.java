@@ -56,7 +56,7 @@ public class Restaurant {
     private List<Reservation> reservations = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="plagehoraire",
+    @JoinTable(name="horaire",
             joinColumns = {@JoinColumn(name="idRestaurant")},
             inverseJoinColumns = {@JoinColumn(name="idHoraire")})
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

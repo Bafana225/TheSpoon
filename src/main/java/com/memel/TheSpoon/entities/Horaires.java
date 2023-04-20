@@ -32,7 +32,7 @@ public class Horaires {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Restaurant> retaurants = new ArrayList<>();
 
-    @OneToMany(targetEntity = Reservation.class, mappedBy ="horaire", fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Reservation.class, mappedBy ="horaires", fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Reservation> reservations = new ArrayList<>();
 
